@@ -1,0 +1,146 @@
+.login {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 400px;
+  height: 450px;
+  background-color: white;
+  border: 1px solid white;
+  border-radius: 20px;
+}
+
+.register {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 400px;
+  height: 650px;
+  background-color: white;
+  border: 1px solid white;
+  border-radius: 20px;
+}
+.login h1,
+.register h1 {
+  text-align: center;
+  padding-bottom: 10px;
+}
+.login input,
+.register input {
+  width: 275px;
+  margin-bottom: 10px;
+}
+
+.loginContents,
+.regContents {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.loginBody {
+  width: 100vw;
+  height: 100vh;
+  background-color: #3d84b8;
+}
+
+.regBody {
+  width: 100vw;
+  height: 100vh;
+  background-color: #9fe6a0;
+}
+
+.heading {
+  font-size: 30px;
+  color: #f7f7f7 !important ;
+  font-weight: bold;
+  margin-left: 30vw;
+}
+.heading:hover {
+  color: #1d1d1d !important;
+}
+.navigations {
+  font-size: 20px;
+  color: #f7f7f7 !important;
+}
+
+.navigations:hover {
+  color: #1d1d1d !important;
+}
+
+.navbar {
+  background-color: rgba(255, 255, 255, 0) !important;
+  width: 100%;
+}
+
+.main {
+  position: absolute;
+  top: 52%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  height: 600px;
+  width: 400px;
+  background: rgba(255, 255, 255, 0.1);
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: 20px;
+}
+
+.index {
+  height: 100vh;
+  background-image: linear-gradient(120deg, #a1c4fd 0%, #c2e9fb 100%);
+}
+.content {
+  overflow-y: auto;
+  width: inherit;
+  height: 525px;
+  border-radius: 20px;
+}
+
+.content::-webkit-scrollbar {
+  display: none;
+}
+
+.talkBtn {
+  border-radius: 50%;
+  display: flex;
+  justify-content:space-around;
+}
+
+.talk,
+.stop,
+.reset {
+  width: 70px;
+  height: 45px;
+  border: 1px solid #a1c4fd;
+  border-radius: 100%;
+  background-color: #a1c4fd;
+  margin-top: 10px;
+}
+
+.botChat {
+  margin-top: 10px;
+  margin-left: 10px;
+  padding: 10px;
+  width: 275px;
+  height: auto;
+  border: 1px solid #a1c4fd;
+  border-radius: 5px 20px 5px;
+  background-color: #a1c4fd;
+}
+
+.userChat {
+  margin-top: 10px;
+  margin-left: 110px;
+  padding: 10px;
+  width: 275px;
+  height: auto;
+  border: 1px solid #c2e9fb;
+  border-radius: 20px 5px 20px;
+  background: #c2e9fb;
+}

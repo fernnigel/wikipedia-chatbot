@@ -1,0 +1,337 @@
+{%extends 'loginSystem/layout.html'%}
+{%block body%}
+<div class="index">
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+  <div class="container-fluid">
+    <a class="navbar-brand heading" href="{%url 'index'%}">ChatBot</a>
+      <ul style="margin-right: 30vw;" class="navbar-nav">
+          {% if user.is_authenticated %}
+          <li class="nav-item d-flex">
+            <p style="padding-right:10px" class="navigations mt-2">Hello! {{request.user}}</p>
+            <a class="nav-link navigations" href="{% url 'logout' %}">Log Out</a>
+              
+          </li>
+            {% else %}
+          <li class="nav-item">
+              <a class="nav-link navigations" href="{% url 'login' %}">Log In</a>
+          </li>
+          <li class="nav-item">
+              <a class="nav-link navigations" href="{% url 'register' %}">Register</a>
+          </li>
+      {% endif %}
+      </ul>
+</nav>
+
+<div class="main">
+  <div class="content">
+    <!--<div class="botChat">
+      <p>Hello</p>
+    </div>
+    <div class="userChat">
+      <p>Hey There!</p>
+    </div>-->
+  </div>
+  <div class="talkBtn">
+    <button class="stop">Stop</button>
+    <button class="talk">Talk</button>
+    <button class="reset">Reset</button>
+  </div>
+</div>
+
+</div>
+<div class="notes pb-5">
+  <div class="container mt-5">
+    <h2>Your Notes</h2>
+    <hr>
+    {% if user.is_authenticated%}
+      {%for note in notes%}
+        <div>
+          <div>
+            <h5>{{note.title}}</h5>
+            <p>{{note.notes}}</p>
+            <div style="display: flex;">
+            <form action="{% url 'delete'%}" method="POST">
+              <input type="hidden" value={{note.id}} name="delete_id">
+              <button type="submit" class="btn btn-danger">Delete</button>
+            </form>
+        
+            <a style="margin-left: 10px;" href="{% url 'update' note.id %}"><button class="btn btn-primary">Update</button></a>
+          </div>
+          </div>
+          </div>
+        <hr>
+      {%empty%}
+      <div class="alert alert-info" role="alert">
+        No recorded notes.
+      </div>
+      {%endfor%}
+
+    {%else%}
+    <div class="alert alert-danger" role="alert">
+      Login to see your notes! <a href="{%url 'login'%}">login</a>
+    </div>
+    {%endif%}
+  </div>
+</div>
+{%endblock%}
+
+{%block script%}
+<script type="text/javascript">
+const btn = document.querySelector(".talk");
+const content = document.querySelector(".content");
+const btnReset = document.querySelector(".reset");
+const btnStop = document.querySelector(".stop");
+
+const greetings = ["I am doing great"];
+
+const SpeechRecognition =
+  window.SpeechRecognition || window.webkitSpeechRecognition;
+
+const recognition = new SpeechRecognition();
+
+const speech = new SpeechSynthesisUtterance();
+
+function getLocalStream() {
+  navigator.mediaDevices
+    .getUserMedia({ video: false, audio: true })
+    .then((stream) => {
+      window.localStream = stream; // A
+      //window.localAudio.srcObject = stream; // B
+      //window.localAudio.autoplay = true; // C
+    })
+    .catch((err) => {
+      console.log("u got an error:" + err);
+    });
+}
+
+window.onload = () => {
+  getLocalStream();
+};
+
+btnReset.addEventListener("click", () => {
+  location.reload();
+});
+
+btnStop.addEventListener("click", () => {
+  speechSynthesis.resume();
+  speechSynthesis.cancel();
+});
+
+btn.addEventListener("click", () => {
+  recognition.start();
+});
+
+recognition.onstart = function () {
+  btn.style.background = "#c2e9fb";
+};
+
+recognition.onresult = function (event) {
+  const current = event.resultIndex;
+  const transcript = event.results[current][0].transcript;
+
+  var userP = document.createElement("p");
+
+  var userChat = document.createElement("div");
+
+  userChat.classList.add("userChat");
+  content.appendChild(userChat);
+  userChat.appendChild(userP);
+
+  userP.innerHTML += transcript;
+
+  readOutLoud(transcript);
+
+  btn.style.background = "#a1c4fd";
+};
+
+recognition.onspeechend = function () {
+  recognition.stop();
+};
+
+recognition.onerror = function (event) {
+  console.log("Error occurred in recognition: " + event.error);
+};
+
+function readOutLoud(message) {
+  var botP = document.createElement("p");
+  var botChat = document.createElement("div");
+  botChat.classList.add("botChat");
+
+  content.appendChild(botChat);
+
+  speech.text = "Couldn't catch that";
+  botP.innerHTML = speech.text;
+
+  if (message.includes("how are you")) {
+    speech.text = greetings[0];
+    botP.innerHTML = speech.text;
+  } else if (
+    message.includes("what are you") ||
+    message.includes("what can you do") ||
+    message.includes("introduce") ||
+    message.includes("tell me about you") ||
+    message.includes("who are you")
+  ) {
+    speech.text = "I am a chat bot that can search information from wikipedia";
+    botP.innerHTML = speech.text;
+  } 
+  else if(message.includes("what is the time")){
+    var d = new Date();
+    speech.text = d.toLocaleTimeString();
+    botP.innerHTML = speech.text;
+  }
+  
+  else if (message.includes("hello")) {
+    speech.text = "Hi, nice to meet you";
+    botP.innerHTML = speech.text;
+  } else if (message.includes("search for")) {
+    var textMsg = message.split(" ");
+    textMsg.splice(0, 2);
+    speech.text = "Fetching";
+
+    if (textMsg.length == 1) {
+      searched.apply(null, textMsg);
+      botP.innerHTML = speech.text;
+    } else if (textMsg.length == 2) {
+      searched2.apply(null, textMsg);
+      botP.innerHTML = speech.text;
+    }
+  } else if (message.includes("who is")) {
+    var textMsg = message.split(" ");
+    textMsg.splice(0, 2);
+    speech.text = "Fetching";
+    searched2.apply(null, textMsg);
+    botP.innerHTML = speech.text;
+  }
+
+  botChat.appendChild(botP);
+  window.speechSynthesis.speak(speech);
+}
+
+function searched(c) {
+  getdata = async () => {
+    var title = c;
+    const url =
+      "https://en.wikipedia.org/w/api.php?action=query&origin=*&prop=extracts&exsentences=2&exlimit=1&titles=" +
+      title +
+      "&explaintext=1&formatversion=2&format=json";
+    let data = await fetch(url);
+    let finaldata = await data.json();
+
+    var extract = finaldata.query.pages[0].extract;
+    extract = extract.replace(/(?:\r\n|\r|\n)/g, " ");
+    speech.text = extract;
+    /*console.log(speech.text);*/
+
+    var botP = document.createElement("p");
+    var botChat = document.createElement("div");
+    
+    botChat.classList.add("botChat");
+    content.appendChild(botChat);
+    botChat.appendChild(botP);
+    botP.innerHTML = extract;
+
+    {% if user.is_authenticated%}
+    var form = document.createElement("form");
+    form.method = "POST";
+    form.action = "{% url 'index'%}";
+    var submit = document.createElement("button");
+    submit.classList.add("btn","btn-primary");
+    submit.type = "submit";
+    submit.innerHTML = "Add to Notes";
+
+    var notes = document.createElement("input");
+    notes.type = "hidden";
+    notes.value=extract;
+    notes.name="notes";
+
+    var noteTitle = document.createElement("input");
+    noteTitle.type = "hidden";
+    noteTitle.value=title;
+    noteTitle.name="noteTitle";
+
+    var botChat = document.createElement("div");
+    botChat.classList.add("botChat");
+    content.appendChild(botChat);
+    botChat.appendChild(form);
+    form.appendChild(submit);
+    form.appendChild(notes);
+    form.appendChild(noteTitle);
+    {%endif%}
+
+  };
+  getdata();
+  window.speechSynthesis.speak(speech);
+}
+
+function searched2(c, d) {
+  getdata = async () => {
+    var title = c + "_" + d;
+    const url =
+      "https://en.wikipedia.org/w/api.php?action=query&origin=*&prop=extracts&exsentences=2&exlimit=1&titles=" +
+      title +
+      "&explaintext=1&formatversion=2&format=json";
+    let data = await fetch(url);
+    let finaldata = await data.json();
+
+    var extract = finaldata.query.pages[0].extract;
+    extract = extract.replace(/(?:\r\n|\r|\n)/g, " ");
+    speech.text = extract;
+    /*console.log(speech.text);*/
+
+    var botP = document.createElement("p");
+    var botChat = document.createElement("div");
+
+    botChat.classList.add("botChat");
+    content.appendChild(botChat);
+    botChat.appendChild(botP);
+    botP.innerHTML = extract;
+
+    {% if user.is_authenticated%}
+    var form = document.createElement("form");
+    form.method = "POST";
+    form.action = "{% url 'index'%}";
+    var submit = document.createElement("button");
+    submit.classList.add("btn","btn-primary");
+    submit.type = "submit";
+    submit.innerHTML = "Add to Notes";
+
+    var notes = document.createElement("input");
+    notes.type = "hidden";
+    notes.value=extract;
+    notes.name="notes";
+
+    var noteTitle = document.createElement("input");
+    noteTitle.type = "hidden";
+    noteTitle.value=title.replace("_"," ");
+    noteTitle.name="noteTitle";
+
+    var botChat = document.createElement("div");
+    botChat.classList.add("botChat");
+    content.appendChild(botChat);
+    botChat.appendChild(form);
+    form.appendChild(submit);
+    form.appendChild(notes);
+    form.appendChild(noteTitle);
+    {%endif%}
+
+  };
+  getdata();
+  window.speechSynthesis.speak(speech);
+}
+
+function resumeInfinity() {
+  speechSynthesis.pause();
+  window.speechSynthesis.resume();
+  timeoutResumeInfinity = setTimeout(resumeInfinity, 1000);
+}
+
+speech.onstart = function (event) {
+  resumeInfinity();
+};
+
+speech.onend = function (event) {
+  clearTimeout(timeoutResumeInfinity);
+};
+</script>
+{%endblock%}

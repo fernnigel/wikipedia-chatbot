@@ -1,0 +1,29 @@
+{%extends 'loginSystem/layout.html'%}
+
+{%block body%}
+<div class="loginBody">
+    <div class="login">
+        <div class="loginContents">
+        <form action="{% url 'login' %}" method="post">
+            {% csrf_token %}
+            <h1> Login Form</h1>
+            <div class="form-group">
+                <label>Username</label>
+                <input autofocus class="form-control" type="text" name="username" name="username">
+            </div>
+            <div class="form-group">
+                <label>Password</label>
+                <input class="form-control" type="password" name="password" name="password">
+            </div>
+            <input style="margin-top: 10px;" class="btn btn-danger" type="submit" value="Login">
+            Don't have an account? <a href="{% url 'register' %}">Register here.</a>
+            {%if message%}
+            <div class="alert alert-danger mt-3" role="alert">
+                {{message}}
+            </div>
+    {%endif%}
+        </form>
+    </div>
+    </div>
+</div>
+{%endblock%}
