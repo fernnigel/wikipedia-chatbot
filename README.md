@@ -17,11 +17,11 @@ using keywords 'search for'
 
 ![](demo/1.png)
 
+![](demo/2.png)
+
 using keywords 'who is'
 
 ![](demo/18.png)
-
-![](demo/2.png)
 
 **2. Registeration page** 
 
