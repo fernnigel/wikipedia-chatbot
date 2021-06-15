@@ -13,7 +13,13 @@ Speech recognition is accessed via the [SpeechRecognition](https://developer.moz
 ### Demonstration:
 **1. Guest users** can use the chatbot, however they cannot save fetched information
 
+using keywords 'search for'
+
 ![](demo/1.png)
+
+using keywords 'who is'
+
+![](demo/18.png)
 
 ![](demo/2.png)
 
