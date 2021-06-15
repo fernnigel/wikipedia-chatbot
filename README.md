@@ -30,5 +30,28 @@ Speech recognition is accessed via the [SpeechRecognition](https://developer.moz
 
 ![](demo/8.png)
 
+**5. On successful login**
 
+![](demo/9.png)
 
+![](demo/10.png)
+
+**6. Adding notes**, saving information fetched
+
+![](demo/11.png)
+
+![](demo/12.png)
+
+**7. Updating notes**
+
+![](demo/13.png)
+
+![](demo/14.png)
+
+![](demo/15.png)
+
+**8. Deleting notes**
+
+![](demo/16.png)
+
+![](demo/17.png)
