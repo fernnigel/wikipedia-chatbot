@@ -7,7 +7,7 @@ Speech recognition is accessed via the [SpeechRecognition](https://developer.moz
 3. Give logged in users option to save the fetched information
 ### How to use:
 1. click talk button and say the keywords of 'search for' to search,<br><br>*search for **'word'***<br><br>
-2. to search for people, say the keywords of 'who is', <br><br>*who is **'name_surname'**<br><br>
+2. to search for people, say the keywords of 'who is', <br><br>*who is **'name_surname'***<br><br>
 3. The stop button will stop the chatbot from talking.
 4. the reset button will reset the SpeechRecognition and SpeechSynthesis.
 ### Demonstration:
