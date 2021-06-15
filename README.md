@@ -1,5 +1,5 @@
 # wikipedia-chatbot
-The aim of this project is to create a virtual information chat-bot, thus developing a chatbot that will give us required information using Wikipedia's open source API, by conversing and interacting with us.__
+The aim of this project is to create a virtual information chat-bot, thus developing a chatbot that will give us required information using Wikipedia's open source API, by conversing and interacting with us.\
 Speech recognition is accessed via the [SpeechRecognition](https://developer.mozilla.org/en-US/docs/Web/API/SpeechRecognition) interface whereas Speech synthesis is accessed via the [SpeechSynthesis](https://developer.mozilla.org/en-US/docs/Web/API/SpeechSynthesis) interface
 ### Objectives:
 1. Create an interactive and fun environment for getting information from Wikipedia.
